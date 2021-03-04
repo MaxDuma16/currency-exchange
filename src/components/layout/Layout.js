@@ -1,13 +1,12 @@
 import React from 'react';
 import './layout.scss';
 import AddClass from '../../hoc/AddClass';
+import { Header } from '../header/header';
 
  const Layout = () => {
 
     return (
-        <div>
-            <h1>Layout</h1>
-        </div>
+        <Header />
     )
 }
 
