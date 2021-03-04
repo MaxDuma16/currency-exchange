@@ -1,7 +1,8 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import './App.scss';
 import Layout from './components/layout/Layout';
+import { RateContext } from './context/ReteContext';
+
 
 import UAN from './image/UA.png';
 import CHF from './image/CHF.png';
@@ -11,6 +12,7 @@ import GBP from './image/GBP.png';
 import JPY from './image/JPY.png';
 import RUB from './image/RUB.png';
 import USD from './image/USD.png';
+
 
 
  class App extends React.Component {
@@ -35,9 +37,9 @@ import USD from './image/USD.png';
 
   render() {
     return (
-      <div>
-        <Layout />
-      </div>
+        <RateContext.Provider value = {{state: this.state}}>
+          <Layout />
+        </RateContext.Provider>
     )
   }
 }
