@@ -4,7 +4,6 @@ import Layout from './components/layout/Layout';
 import { RateContext } from './context/ReteContext';
 
 
-import UAN from './image/UA.png';
 import CHF from './image/CHF.png';
 import CNY from './image/CNY.png';
 import EUR from './image/EUR.png';
@@ -23,16 +22,36 @@ import USD from './image/USD.png';
         rate: '',
         data: '',
         currency: {
-          'USD': {name: 'Dolar USD', flag: USD, course: '99999' },
-          'UAN': {name: 'Ukrainian Hryvnia', flag: UAN, course: '99999' },
-          'CHF': {name: 'Chinese yuan', flag: CHF, course: '99999' },
-          'EUR': {name: 'Euro', flag: EUR, course: '99999' },
-          'GBP': {name: 'Pound Sterling', flag: GBP, course: '99999' },
-          'JPY': {name: 'Japanese yen', flag: JPY, course: '99999' },
-          'RUB': {name: 'Dolar USD', flag: RUB, course: '99999' },
-          'CNY': {name: 'Swiss franc', flag: CNY, course: '99999' },
+          'USD': {name: 'Dolar USD', flag: USD, course: '' },
+          'CHF': {name: 'Chinese yuan', flag: CHF, course: '' },
+          'EUR': {name: 'Euro', flag: EUR, course: '' },
+          'GBP': {name: 'Pound Sterling', flag: GBP, course: '' },
+          'JPY': {name: 'Japanese yen', flag: JPY, course: '' },
+          'RUB': {name: 'Dolar USD', flag: RUB, course: '' },
+          'CNY': {name: 'Swiss franc', flag: CNY, course: '' },
         }
       };
+  }
+  
+  componentDidMount() {
+      fetch(`https://api.exchangeratesapi.io/latest?base=${this.state.base}`) 
+        .then((responce) => responce.json())
+        .then((responce) => {
+          // console.log(responce);
+          const rateArr = ['USD', 'CHF', 'CHF', 'EUR', 'GBP', 'JPY', 'RUB', 'CNY'];
+          const currency = {...this.state.currency};
+
+          for(let i = 0; i < rateArr.length; i++) {
+            currency[rateArr[i]].course = responce.rates[rateArr[i]]
+          }
+          this.setState({
+            rate: responce.rate,
+            data: responce.date,
+            currency
+          })
+
+
+        });
   }
 
   render() {

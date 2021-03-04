@@ -1,9 +1,14 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import './layout.scss';
+import  Home  from '../../pages/home/home';
+import { Route, Switch } from 'react-router-dom';
 import AddClass from '../../hoc/AddClass';
-import { Header } from '../header/header';
-import Home from '../../pages/home/home';
-import Sidebar from '../sidebar/sidebar';
+import  { Header }  from '../header/header';
+import  Sidebar  from '../sidebar/sidebar';
+
+import Calc  from '../../pages/calc/calc';
+import Info  from '../../pages/info/info';
+import Sample  from '../../pages/sample/sample';
 
  const Layout = () => {
 
@@ -12,7 +17,12 @@ import Sidebar from '../sidebar/sidebar';
             <Header />
             <div className = "content">
                 <div className= "routes">
-                    <Home />
+                    <Switch>
+                        <Route path='/' component={Home}/>
+                        <Route path='/calc' render= {()=> <Calc/>}/>
+                        <Route path='/sample' render= {() => <Sample />}/>
+                        <Route path='/info' render= {() => <Info />}/>
+                    </Switch>
                 </div>
                 <Sidebar />
             </div>
@@ -20,4 +30,4 @@ import Sidebar from '../sidebar/sidebar';
     )
 }
 
-export default AddClass(Layout, 'layout') ;
+export default AddClass(Layout, 'layout');
