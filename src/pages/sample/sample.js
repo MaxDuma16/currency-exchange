@@ -4,7 +4,7 @@ import { RateContext } from '../../context/ReteContext';
 import './sample.scss';
 
 const Sample = () => {
-    const {state, baseHandler, base2Handler, sampleDateHandler, dataWrite } = useContext(RateContext);
+    const {state, baseHandler, base2Handler, sampleDateHandler, dataWrite, sampleRemove } = useContext(RateContext);
     return (
         <div className='sample'>
             <div className='sampleContainer'>
@@ -40,7 +40,7 @@ const Sample = () => {
                                     <span> <img src= {state.currency[state.sampleList[item].base].flag} alt={item}/> &nbsp;{state.sampleList[item].base}</span>
                                     <span>{state.sampleList[item].date}</span>
                                     <span>{`${state.sampleList[item].course} ${state.sampleList[item].base2}`}</span>
-                                    <button><i className='fa fa-times'/></button>
+                                    <button onClick={() => sampleRemove(item)}><i className='fa fa-times'/></button>
                                 </li>
                             )
                         })}
