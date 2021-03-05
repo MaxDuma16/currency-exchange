@@ -11,6 +11,8 @@ import GBP from './image/GBP.png';
 import JPY from './image/JPY.png';
 import RUB from './image/RUB.png';
 import USD from './image/USD.png';
+import Modal from './components/modal/modal';
+import Dark from './components/dark/dark';
 
 
  class App extends React.Component {
@@ -138,6 +140,8 @@ import USD from './image/USD.png';
                   dataWrite: this.dataWrite,
                   sampleRemove: this.sampleRemove
                   }}>
+          <Dark />
+          <Modal />
           <Layout />
         </RateContext.Provider>
     )
