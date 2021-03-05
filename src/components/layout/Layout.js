@@ -18,7 +18,7 @@ import Sample  from '../../pages/sample/sample';
             <div className = "content">
                 <div className= "routes">
                     <Switch>
-                        <Route path='/' component={Home}/>
+                        <Route path='/' exact component={Home}/>
                         <Route path='/calc' render= {()=> <Calc/>}/>
                         <Route path='/sample' render= {() => <Sample />}/>
                         <Route path='/info' render= {() => <Info />}/>

@@ -3,7 +3,11 @@ import './info.scss';
 
 const Info = () => {
     return (
-        <h1>Info</h1>
+        <div className='info'>
+            <h3>Currency conversion application</h3>
+            <p>Author: Max </p>
+            <p>Email: maxduma16@gmail.com</p>
+        </div>
     )
 };
 
