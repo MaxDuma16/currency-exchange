@@ -241,7 +241,8 @@ function validateEmail(email) {
                   modalShowHandler: this.modalShowHandler,
                   modalHideHandler: this.modalHideHandler
                   }}>
-          <Dark />
+          <Dark showModal = {this.state.showModal} 
+                 modalHideHandler = {this.modalHideHandler}  />
           <Modal />
           <Layout />
         </RateContext.Provider>
