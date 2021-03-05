@@ -1,9 +1,16 @@
 import React from 'react';
+import Counter from '../../components/counter/counter';
+import CountResult from '../../components/countResult/countResult';
 import './calc.scss';
 
 const Calc = () => {
     return (
-        <h1>Calc</h1>
+        <div className='calculator'>
+            <div className='calcContainer'>
+                <Counter />
+                <CountResult />
+            </div>
+        </div>
     )
 };
 

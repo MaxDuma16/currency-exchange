@@ -29,8 +29,30 @@ import USD from './image/USD.png';
           'JPY': {name: 'Japanese yen', flag: JPY, course: '' },
           'RUB': {name: 'Dolar USD', flag: RUB, course: '' },
           'CNY': {name: 'Swiss franc', flag: CNY, course: '' },
-        }
+        },
+        // calc
+        inputValue: 100,
+        currencyValue: 'USD',
+        result: null
       };
+  }
+
+  inputValueHandler = (event) => {
+    this.setState({inputValue: event.target.value})
+  }
+
+  currencyValueHandler = (event) => {
+    this.setState({currencyValue: event.target.currency})
+  }
+
+  calcHandler = async (value) => {
+    let result;
+    await fetch('https://api.exchangeratesapi.io/latest?base=RUB')
+          .then((responce) => responce.json())
+          .then((responce) => {
+            result = responce.rates[value] * this.state.inputValue;
+          });
+          this.setState({result})
   }
   
   componentDidMount() {
@@ -56,7 +78,12 @@ import USD from './image/USD.png';
 
   render() {
     return (
-        <RateContext.Provider value = {{state: this.state}}>
+        <RateContext.Provider 
+        value = {{state: this.state, 
+                  inputValueHandler: this.inputValueHandler,
+                  currencyValueHandler: this.currencyValueHandler,
+                  calcHandler: this.calcHandler
+                  }}>
           <Layout />
         </RateContext.Provider>
     )
