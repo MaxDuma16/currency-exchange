@@ -1,23 +1,43 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useContext } from 'react';
+import { RateContext } from '../../context/ReteContext';
 import Login from '../login/login';
 import Register from '../register/register';
 import './modal.scss';
 
 const Modal = () => {
+    const {state, modalHideHandler} = useContext(RateContext);
+    const [value, setValue] = useState('login');
+    const links = [{name: 'Sign in', id: 'login'}, {name: 'Check-in', id: 'register'}];
+    const cls = ['modal'];
+
+    const windowHendler = (id) => {
+        setValue(id)
+    }
+
+    if(state.showModal) {
+        cls.push('modalShow');
+    }
+
     return (
-        <div className='modal'>
+        <div className={cls.join(' ')}>
             <Fragment>
                 <div className='modalHead'>
                     <ul>
-                        <li>Sign in</li>
-                        <li> Check-in</li>
+                        {links.map((item, i) => {
+                            return (
+                                <li 
+                                    style={{fontWeight: item.id === value ? 'bold' : 'normal', cursor: 'pointer'}} 
+                                    key={item.name} 
+                                    onClick={() => windowHendler(item.id)}>{item.name}
+                                </li>
+                            )
+                        })}
                     </ul>
-                    <i className='fa fa-times' aria-hidden = 'true'/>
+                    <i className='fa fa-times' aria-hidden = 'true' onClick={modalHideHandler}/>
                 </div>
             <hr />
            </Fragment>
-           <Login />
-           {/* <Register /> */}
+           {value === 'register' ? <Register /> : <Login />}
         </div>
     )
 }

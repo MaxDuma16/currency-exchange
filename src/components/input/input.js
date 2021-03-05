@@ -1,6 +1,10 @@
 import React from 'react';
 import './input.scss';
 
+function isInvalid({valid, touched, shouldValidate}){
+    return !valid && touched && shouldValidate
+}
+
 const Input = (props) => {
     const cls = ['modalInput'];
     const inputType = props.type || 'text';
@@ -12,7 +16,8 @@ const Input = (props) => {
                    id = {htmlFor}
                    value = {props.value}
                    onChange={props.onChange}/>
-            <span>{props.errorMessage}</span>
+            {isInvalid(props) ? 
+            <span style={{color: '#f01f30'}}>{props.errorMessage || 'Enter the correct value'}</span>  : null}
         </div>
     )
 }

@@ -13,12 +13,44 @@ import RUB from './image/RUB.png';
 import USD from './image/USD.png';
 import Modal from './components/modal/modal';
 import Dark from './components/dark/dark';
+import Input from './components/input/input';
 
 
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
  class App extends React.Component {
   constructor(props) {
     super(props); 
       this.state = {
+        formControls: {
+            email: {
+                    value: '',
+                    type: 'email',
+                    label: 'Email',
+                    errorMessage: 'Enter the correct value',
+                    valid: false,
+                    touched: false,
+                    validation: {
+                      required: true,
+                      email: true
+                    }
+                  },
+            password: {
+                    value: '',
+                    type: 'password',
+                    label: 'Password',
+                    errorMessage: 'Enter the correct password',
+                    valid: false,
+                    touched: false,
+                    validation: {
+                      required: true,
+                      minLenght: 6
+                    }
+        }
+      },
+
         base: 'USD',
         rate: '',
         data: '',
@@ -37,9 +69,21 @@ import Dark from './components/dark/dark';
         result: null,
         // sample
         sample: {base: 'USD', base2: 'RUB', date: '', course: ''},
-        sampleList: ''
-      };
+        sampleList: '',
+        // Modal
+        showModal: false
+      }
   }
+
+  modalShowHandler = () => {
+    this.setState({showModal: true})
+  }
+
+  modalHideHandler = () => {
+    this.setState({showModal: false})
+  }
+
+
 
   baseHandler = (event) => {
     this.setState({sample: {...this.state.sample, base: event.target.value}})
@@ -127,6 +171,60 @@ import Dark from './components/dark/dark';
         })
   }
 
+  validateControl(value, validation) {
+    if(!validation) {
+      return true
+    }
+    let isValid = true;
+    if(validation.required) {
+      isValid = value.trim() !=='' && isValid
+    }
+
+    if(validation.email) {
+      isValid = validateEmail(value) && isValid
+    }
+
+    if(validation.minLenght) {
+      isValid = value.length >= validation.minLenght && isValid
+    }
+
+    return isValid
+  }
+
+  onChangeHandler = (event, controlName) => {
+    const formControls = {...this.state.formControls};
+
+    const control = {...formControls[controlName]};
+
+    control.value = event.target.value;
+    control.touched = true;
+    control.valid = this.validateControl(control.value, control.validation);
+
+    formControls[controlName] = control
+
+    this.setState({formControls})
+
+  }
+
+  renderInputs = () => {
+      return Object.keys(this.state.formControls).map((controlName, i) => {
+        const control = this.state.formControls[controlName];
+        return (
+          <Input 
+              key = {control.name + i}
+              type = {control.type}
+              value = {control.value}
+              valid = {control.valid}
+              touched = {control.touched}
+              label = {control.label}
+              errorMessage = {control.errorMessage}
+              shouldValidate = {true}
+              onChange = {(event) => this.onChangeHandler(event, controlName)}
+          />
+        )
+      })
+  }
+
   render() {
     return (
         <RateContext.Provider 
@@ -138,7 +236,10 @@ import Dark from './components/dark/dark';
                   base2Handler: this.base2Handler,
                   sampleDateHandler: this.sampleDateHandler,
                   dataWrite: this.dataWrite,
-                  sampleRemove: this.sampleRemove
+                  sampleRemove: this.sampleRemove,
+                  renderInputs: this.renderInputs,
+                  modalShowHandler: this.modalShowHandler,
+                  modalHideHandler: this.modalHideHandler
                   }}>
           <Dark />
           <Modal />

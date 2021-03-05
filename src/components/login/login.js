@@ -1,14 +1,15 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useContext} from 'react';
+import { RateContext } from '../../context/ReteContext';
 import Button from '../buttton/button';
 import Input from '../input/input';
 import './login.scss';
 
 const Login = () => {
+    const { renderInputs } = useContext(RateContext);
     return (
         <Fragment>
             <div className='modalForm'>
-                <Input type='email' label = 'Email' />
-                <Input type='password' label = 'Password' />
+                {renderInputs()}
             </div>
             <div className='modalBtn'>
                 <Button text='Sing in'/>
