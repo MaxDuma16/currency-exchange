@@ -12,19 +12,23 @@ import Sample  from '../../pages/sample/sample';
 import { RateContext } from '../../context/ReteContext';
 
  const Layout = () => {
-    const {state} = useContext(RateContext);
-    
+    const { state } = useContext(RateContext);
+
     return (
         <Fragment>
             <Header />
             <div className = "content">
                 <div className= "routes">
+                    {state.auth ? 
                     <Switch>
                         <Route path='/' exact component={Home}/>
                         <Route path='/calc' render= {()=> <Calc/>}/>
                         <Route path='/sample' render= {() => <Sample />}/>
                         <Route path='/info' render= {() => <Info />}/>
                     </Switch>
+                     : 
+                     <Route path='/' component={Home}/> 
+                     }
                 </div>
                 <Sidebar />
             </div>
