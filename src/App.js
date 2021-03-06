@@ -256,7 +256,7 @@ function validateEmail(email) {
         const control = this.state.formControls[controlName];
         return (
           <Input 
-              key = {control.name + i}
+              key = {controlName + i}
               type = {control.type}
               value = {control.value}
               valid = {control.valid}

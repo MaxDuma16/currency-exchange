@@ -41,7 +41,7 @@ const Modal = () => {
            <div style={{textAlign: 'center'}}>
            <h2 style={{color: '#f01f30'}}>{state.error}</h2>
            </div>
-           
+
            {value === 'register' ? <Register /> : <Login />}
         </div>
     )
