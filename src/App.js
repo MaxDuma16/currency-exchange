@@ -24,6 +24,8 @@ function validateEmail(email) {
   constructor(props) {
     super(props); 
       this.state = {
+        auth: false,
+        error: '',
         formControls: {
             email: {
                     value: '',
@@ -83,9 +85,15 @@ function validateEmail(email) {
     }
     try {
       const responce = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD74cLC1RYoHk6vWTpbd4Obx49mDPesGxw', authData)
-      console.log(responce)
+        if(responce.data.idToken) {
+          const formControls = {...this.state.formControls};
+          formControls.email.value = '';
+          formControls.password.value = '';
+          this.setState({auth: true, showModal: false, error: '', formControls: formControls})
+        } 
     } catch(e) {
       console.log(e);
+      this.setState({error: 'Error'})
     }
   }
 
@@ -96,9 +104,15 @@ function validateEmail(email) {
                       }
     try {
       const responce = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyD74cLC1RYoHk6vWTpbd4Obx49mDPesGxw', authData)
-      console.log(responce)
+        if(responce.data.idToken) {
+          const formControls = {...this.state.formControls};
+          formControls.email.value = '';
+          formControls.password.value = '';
+          this.setState({auth: true, showModal: false, error: '', formControls: formControls})
+        } 
     } catch(e) {
       console.log(e);
+      this.setState({error: 'Error'})
     }
   }
 

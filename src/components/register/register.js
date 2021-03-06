@@ -1,7 +1,6 @@
 import React, {Fragment, useContext} from 'react';
 import { RateContext } from '../../context/ReteContext';
 import Button from '../buttton/button';
-import Input from '../input/input';
 import './register.scss';
 
 const Register = () => {

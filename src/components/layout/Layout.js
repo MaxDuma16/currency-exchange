@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import './layout.scss';
 import  Home  from '../../pages/home/home';
 import { Route, Switch } from 'react-router-dom';
@@ -9,9 +9,11 @@ import  Sidebar  from '../sidebar/sidebar';
 import Calc  from '../../pages/calc/calc';
 import Info  from '../../pages/info/info';
 import Sample  from '../../pages/sample/sample';
+import { RateContext } from '../../context/ReteContext';
 
  const Layout = () => {
-
+    const {state} = useContext(RateContext);
+    
     return (
         <Fragment>
             <Header />
