@@ -71,8 +71,35 @@ function validateEmail(email) {
         sample: {base: 'USD', base2: 'RUB', date: '', course: ''},
         sampleList: '',
         // Modal
-        showModal: false
+        showModal: false,
+        isFromValid: false
       }
+  }
+
+  loginHendler = async () => {
+    const authData = {email: this.state.formControls.email.value,
+      password: this.state.formControls.password.value,
+      returnSecureToken: true
+    }
+    try {
+      const responce = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD74cLC1RYoHk6vWTpbd4Obx49mDPesGxw', authData)
+      console.log(responce)
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  registerHendler = async () => {
+    const authData = {email: this.state.formControls.email.value,
+                      password: this.state.formControls.password.value,
+                      returnSecureToken: true
+                      }
+    try {
+      const responce = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyD74cLC1RYoHk6vWTpbd4Obx49mDPesGxw', authData)
+      console.log(responce)
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   modalShowHandler = () => {
@@ -82,8 +109,6 @@ function validateEmail(email) {
   modalHideHandler = () => {
     this.setState({showModal: false})
   }
-
-
 
   baseHandler = (event) => {
     this.setState({sample: {...this.state.sample, base: event.target.value}})
@@ -202,7 +227,13 @@ function validateEmail(email) {
 
     formControls[controlName] = control
 
-    this.setState({formControls})
+    let isFromValid = 'true';
+
+    Object.keys(formControls).forEach(name => {
+      isFromValid = formControls[name].valid && isFromValid;
+    })
+
+    this.setState({formControls, isFromValid})
 
   }
 
@@ -239,7 +270,9 @@ function validateEmail(email) {
                   sampleRemove: this.sampleRemove,
                   renderInputs: this.renderInputs,
                   modalShowHandler: this.modalShowHandler,
-                  modalHideHandler: this.modalHideHandler
+                  modalHideHandler: this.modalHideHandler,
+                  loginHendler: this.loginHendler,
+                  registerHendler: this.registerHendler
                   }}>
           <Dark showModal = {this.state.showModal} 
                  modalHideHandler = {this.modalHideHandler}  />

@@ -5,14 +5,18 @@ import Input from '../input/input';
 import './register.scss';
 
 const Register = () => {
-    const { renderInputs } = useContext(RateContext);
+    const { renderInputs, state, registerHendler } = useContext(RateContext);
     return (
         <Fragment>
             <div className='modalForm'>
             {renderInputs()}
             </div>
             <div className='modalBtn'>
-                <Button text='Check-in'/>
+                <Button 
+                    text='Check-in' 
+                    disabled={!state.isFormValid}
+                    click = {registerHendler}
+                    />
             </div>
         </Fragment>
     )
